@@ -33,8 +33,6 @@ from tempfile import TemporaryDirectory
 
 from dolphins_recognition_challenge import utils
 
-import git
-
 # Internal Cell
 
 dataset_url = "https://s3.eu-central-1.amazonaws.com/ai-league.cisex.org/2020-2021/dolphins-instance-segmentation/dolphins_200_train_val.zip"
