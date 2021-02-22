@@ -267,7 +267,7 @@ def _get_instance_segmentation_dataset(
     )
     dataset_test = DolphinsInstanceSegmentationDataset(
         dataset_root / "Val",
-        tensor_transforms=get_tensor_transforms,
+        tensor_transforms=[],
         n_samples=n_samples
     )
 
