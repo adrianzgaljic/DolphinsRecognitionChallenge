@@ -405,12 +405,12 @@ class RandomHorizontalFlip(object):
 class RandomCenterCrop(object):
 
     def __init__(self, size):
-        self.size = size
+        self.crop = size
 
     def __call__(self, image, target):
 
-        random_center_crop = torchvision.transforms.CenterCrop(200)
+        random_center_crop = torchvision.transforms.CenterCrop(self.crop)
         print("size in f: ", self.size)
-        image = random_center_crop(self.size)
+        image = random_center_crop(image)
         print("image shape in function ", image.shape)
         return image, target
