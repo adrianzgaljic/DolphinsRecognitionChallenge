@@ -158,10 +158,9 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
         # load and transform images and masks
         img = Image.open(img_path).convert("RGB")
+        mask_img = Image.open(mask_path).convert("RGB")
+        label_img = Image.open(label_path).convert("RGB")
         img, _ = ToTensor()(img, None)
-        mask_img = Image.open(mask_path)
-        label_img = Image.open(label_path)
-
         mask_img, _ = ToTensor()(mask_img, None)
         label_img, _ = ToTensor()(label_img, None)
 
@@ -176,7 +175,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
         mask_img = torchvision.transforms.ToPILImage()(mask_img.squeeze_(0))
         label_img = torchvision.transforms.ToPILImage()(label_img.squeeze_(0))
-        print("img size ", img.size)
+        print("img size ", img.shape)
         print("mask_img size ", mask_img.size)
         print("label_img size ", label_img.size)
 
