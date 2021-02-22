@@ -133,7 +133,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
     def __init__(
         self,
         root: Path,
-        tensor_transforms: Optional[Callable[[Image.Image], Any]]=None,
+        tensor_transforms: None,
         n_samples: int=-1
     ):
         self.root = root
@@ -257,12 +257,12 @@ def _get_instance_segmentation_dataset(
     # use our dataset and defined transformations
     dataset = DolphinsInstanceSegmentationDataset(
         dataset_root / "Train",
-        tensor_transforms=get_tensor_transforms(train=True),
+        tensor_transforms=get_tensor_transforms,
         n_samples=n_samples
     )
     dataset_test = DolphinsInstanceSegmentationDataset(
         dataset_root / "Val",
-        tensor_transforms=get_tensor_transforms(train=False),
+        tensor_transforms=get_tensor_transforms,
         n_samples=n_samples
     )
 
