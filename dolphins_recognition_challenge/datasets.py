@@ -217,8 +217,9 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         target["iscrowd"] = iscrowd
         transform_id = (idx//len(self.img_paths))-1
         if transform_id > -1:
-            transform = self.tensor_transforms[transform_id]
-            img, target = transform(img, target)
+            transforms = self.tensor_transforms[transform_id]
+            for transform in transforms:
+                img, target = transform(img, target)
         return img, target
 
     def __len__(self):
