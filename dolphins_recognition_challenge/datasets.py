@@ -410,7 +410,6 @@ class RandomCenterCrop(object):
     def __call__(self, image, target):
 
         random_center_crop = torchvision.transforms.CenterCrop(self.crop)
-        print("size in f: ", self.size)
         image = random_center_crop(image)
         print("image shape in function ", image.shape)
         return image, target
