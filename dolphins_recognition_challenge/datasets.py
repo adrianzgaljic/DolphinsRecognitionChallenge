@@ -181,7 +181,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         # because each color corresponds to a different instance
         # with 0 being background
         mask = _enumerate_image_for_instances(mask_img)
-        print("mask size, ", mask.size)
 
         # instances are encoded as different colors
         obj_ids = np.unique(mask)
@@ -194,7 +193,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         masks = mask == obj_ids[:, None, None]
 
         label_array = _enumerate_image_for_classes(label_img, self.class_colors)
-        print("label_array size, ", label_array.size)
 
         # get bounding box coordinates for each mask
         num_objs = len(obj_ids)
@@ -207,8 +205,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             ymin = np.min(pos[0])
             ymax = np.max(pos[0])
             boxes.append([xmin, ymin, xmax, ymax])
-            print("masks[i] size, ", masks[i].size)
-
 
             class_mask = label_array * masks[i]
             label, count = np.unique(class_mask, return_counts=True)
