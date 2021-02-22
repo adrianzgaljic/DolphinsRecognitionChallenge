@@ -147,7 +147,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         self.class_colors = _enumerate_colors_for_fnames(self.label_paths)
 
     def __getitem__(self, idx):
-        if len(self.tensor_transforms)>0
+        if len(self.tensor_transforms)>0:
             i = idx%len(self.tensor_transforms)
         else:
             i=idx
