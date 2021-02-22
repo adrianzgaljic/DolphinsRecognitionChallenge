@@ -166,6 +166,8 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         if transform_id > -1:
             transforms = self.tensor_transforms[transform_id]
             for img_transform in transforms:
+                print(type(img_transform))
+                print(type(img))
                 img, _ = img_transform(img, None)
                 mask_img, _ = img_transform(mask_img, None)
                 label_img, _ = img_transform(label_img, None)
@@ -385,6 +387,7 @@ class Compose(object):
 
 
 class RandomCenterCrop(object):
+
     def __call__(self, image, target):
         size = random.randint(300,500)
         random_center_crop = torchvision.transforms.CenterCrop(size)
