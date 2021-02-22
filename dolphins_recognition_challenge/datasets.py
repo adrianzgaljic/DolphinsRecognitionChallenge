@@ -165,10 +165,10 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         transform_id = (idx//len(self.img_paths))-1
         if transform_id > -1:
             transforms = self.tensor_transforms[transform_id]
-            for transform in transforms:
-                img, _ = transform(img, None)
-                mask_img, _ = transform(mask_img, None)
-                label_img, _ = transform(label_img, None)
+            for img_transform in transforms:
+                img, _ = img_transform(img, None)
+                mask_img, _ = img_transform(mask_img, None)
+                label_img, _ = img_transform(label_img, None)
 
         # note that we haven't converted the mask to RGB,
         # because each color corresponds to a different instance
