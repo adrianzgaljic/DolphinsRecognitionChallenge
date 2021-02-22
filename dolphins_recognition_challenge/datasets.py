@@ -147,7 +147,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         self.class_colors = _enumerate_colors_for_fnames(self.label_paths)
 
     def __getitem__(self, idx):
-        i = idx%len(tensor_transforms)
+        i = idx%len(self.tensor_transforms)
         # load images ad masks
         img_path = self.img_paths[i]
         label_path = self.label_paths[i]
@@ -212,12 +212,12 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         target["area"] = area
         target["iscrowd"] = iscrowd
 
-        transform = tensor_transforms[idx//len(self.img_paths)]
+        transform = self.tensor_transforms[idx//len(self.img_paths)]
         image, target = transform(image, target)
         return img, target
 
     def __len__(self):
-        return len(self.img_paths)*len(tensor_transforms)
+        return len(self.img_paths)*len(self.tensor_transforms)
 
 # Cell
 
