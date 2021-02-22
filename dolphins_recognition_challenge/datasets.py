@@ -162,6 +162,14 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         mask_img = Image.open(mask_path)
         label_img = Image.open(label_path)
 
+        transform_id = (idx//len(self.img_paths))-1
+        if transform_id > -1:
+            transforms = self.tensor_transforms[transform_id]
+            for tarnsform in transforms:
+                img, _ = transform(img, None)
+                mask_img, _ = transform(mask_img, None)
+                label_img, _ = transform(label_img, None)
+
         # note that we haven't converted the mask to RGB,
         # because each color corresponds to a different instance
         # with 0 being background
@@ -215,11 +223,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         target["image_id"] = image_id
         target["area"] = area
         target["iscrowd"] = iscrowd
-        transform_id = (idx//len(self.img_paths))-1
-        if transform_id > -1:
-            transforms = self.tensor_transforms[transform_id]
-            for transform in transforms:
-                img, target = transform(img, target)
+
         return img, target
 
     def __len__(self):
@@ -388,15 +392,12 @@ class RandomHorizontalFlip(object):
 
     def __call__(self, image, target):
         if random.random() < self.prob:
-            height, width = image.shape[-2:]
             image = image.flip(-1)
-            bbox = target["boxes"]
-            bbox[:, [0, 2]] = width - bbox[:, [2, 0]]
-            target["boxes"] = bbox
-            if "masks" in target:
-                target["masks"] = target["masks"].flip(-1)
-            if "keypoints" in target:
-                keypoints = target["keypoints"]
-                keypoints = _flip_coco_person_keypoints(keypoints, width)
-                target["keypoints"] = keypoints
+        return image, target
+
+class RandomCenterCrop(object):
+    def __call__(self, image, target):
+        size = random.randint(300,500)
+        random_center_crop = torchvision.transforms.CenterCrop(size)
+        image = random_center_crop(image)
         return image, target
