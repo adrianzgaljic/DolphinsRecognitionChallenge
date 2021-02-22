@@ -158,6 +158,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
         # load and transform images and masks
         img = Image.open(img_path).convert("RGB")
+        img, _ = ToTensor()(img, None)
         mask_img = Image.open(mask_path)
         label_img = Image.open(label_path)
 
