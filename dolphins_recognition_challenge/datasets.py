@@ -148,9 +148,10 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         if len(self.tensor_transforms)>0:
-            i = len(self.tensor_transforms)%idx
+            i = idx%len(self.img_paths)
         else:
             i=idx
+        print("i:", i)
         # load images ad masks
         img_path = self.img_paths[i]
         label_path = self.label_paths[i]
