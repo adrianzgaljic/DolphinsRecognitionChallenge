@@ -384,17 +384,6 @@ class Compose(object):
         return image, target
 
 
-class RandomHorizontalFlip(object):
-    """ Randomly flips image horizontally
-    """
-    def __init__(self, prob):
-        self.prob = prob
-
-    def __call__(self, image, target):
-        if random.random() < self.prob:
-            image = image.flip(-1)
-        return image, target
-
 class RandomCenterCrop(object):
     def __call__(self, image, target):
         size = random.randint(300,500)
