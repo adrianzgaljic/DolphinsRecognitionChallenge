@@ -176,6 +176,9 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
         mask_img = torchvision.transforms.ToPILImage()(mask_img.squeeze_(0))
         label_img = torchvision.transforms.ToPILImage()(label_img.squeeze_(0))
+        print("img size ", img.size)
+        print("mask_img size ", mask_img.size)
+        print("label_img size ", label_img.size)
 
         # note that we haven't converted the mask to RGB,
         # because each color corresponds to a different instance
@@ -193,6 +196,8 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         masks = mask == obj_ids[:, None, None]
 
         label_array = _enumerate_image_for_classes(label_img, self.class_colors)
+        print("mask size ", mask.shape)
+        print("label_array size ", label_array.shape)
 
         # get bounding box coordinates for each mask
         num_objs = len(obj_ids)
