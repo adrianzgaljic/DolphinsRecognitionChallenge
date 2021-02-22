@@ -158,8 +158,8 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
         # load and transform images and masks
         img = Image.open(img_path).convert("RGB")
-        mask_img = Image.open(mask_path).convert("RGB")
-        label_img = Image.open(label_path).convert("RGB")
+        mask_img = Image.open(mask_path)
+        label_img = Image.open(label_path)
         img, _ = ToTensor()(img, None)
         mask_img, _ = ToTensor()(mask_img, None)
         label_img, _ = ToTensor()(label_img, None)
@@ -404,8 +404,11 @@ class RandomHorizontalFlip(object):
 
 class RandomCenterCrop(object):
 
+    def __init__(self, size):
+        self.size = size
+
     def __call__(self, image, target):
-        size = random.randint(300,500)
-        random_center_crop = torchvision.transforms.CenterCrop(size)
+
+        random_center_crop = torchvision.transforms.CenterCrop(self.size)
         image = random_center_crop(image)
         return image, target
