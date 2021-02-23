@@ -207,8 +207,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             ymax = np.max(pos[0])
             if xmax>xmin and ymax>ymin:
                 boxes.append([xmin, ymin, xmax, ymax])
-                print(img.shape, "-", xmin,",",ymin,",",xmax,",",ymax)
-
                 class_mask = label_array * masks[i]
                 label, count = np.unique(class_mask, return_counts=True)
                 assert label.shape[0] <= 2
@@ -223,6 +221,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         masks = torch.as_tensor(masks, dtype=torch.uint8)
 
         image_id = torch.tensor([idx])
+        print("boxes", boxes)
         area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])
         # suppose all instances are not crowd
         iscrowd = torch.zeros((num_objs,), dtype=torch.int64)
