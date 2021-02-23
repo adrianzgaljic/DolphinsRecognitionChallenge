@@ -33,7 +33,6 @@ from tempfile import TemporaryDirectory
 
 from dolphins_recognition_challenge import utils
 
-import git
 
 # Internal Cell
 
