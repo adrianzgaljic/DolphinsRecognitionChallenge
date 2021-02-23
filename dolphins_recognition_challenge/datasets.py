@@ -205,14 +205,15 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             xmax = np.max(pos[1])
             ymin = np.min(pos[0])
             ymax = np.max(pos[0])
-            boxes.append([xmin, ymin, xmax, ymax])
-            print(img.shape, "-", xmin,",",ymin,",",xmax,",",ymax)
+            if xmax>xmin and ymax>ymin:
+                boxes.append([xmin, ymin, xmax, ymax])
+                print(img.shape, "-", xmin,",",ymin,",",xmax,",",ymax)
 
-            class_mask = label_array * masks[i]
-            label, count = np.unique(class_mask, return_counts=True)
-            assert label.shape[0] <= 2
-            label = max(label)
-            labels.append(label)
+                class_mask = label_array * masks[i]
+                label, count = np.unique(class_mask, return_counts=True)
+                assert label.shape[0] <= 2
+                label = max(label)
+                labels.append(label)
 
         boxes = torch.as_tensor(boxes, dtype=torch.float32)
         # there WAS multi class
