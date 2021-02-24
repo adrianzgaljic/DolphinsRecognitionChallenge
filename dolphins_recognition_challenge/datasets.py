@@ -186,14 +186,11 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             xmax = np.max(pos[1])
             ymin = np.min(pos[0])
             ymax = np.max(pos[0])
-            width = xmax - xmin
-            height = ymax - ymin
-            width = 1 if width < 1 else width
-            height = 1 if height < 1 else height
-            xmin = xmin//width
-            xmax = xmax//width
-            ymin = ymin//height
-            ymax = ymax//height
+
+            xmin = xmin/img.shape[2]
+            xmax = xmax/img.shape[2]
+            ymin = ymin/img.shape[1]
+            ymax = ymax/img.shape[1]
 
             boxes.append([xmin, ymin, xmax, ymax])
 
