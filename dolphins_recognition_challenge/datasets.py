@@ -219,12 +219,12 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
               image=img,
               masks=masks,
               bboxes=boxes,
-              bbox_classes=labels,
+              #bbox_classes=labels,
             )
             img = transformed["image"]
             masks = transformed["masks"]
             boxes = transformed["bboxes"]
-            labels = transformed["bbox_classes"]
+            #labels = transformed["bbox_classes"]
 
         target = {}
         target["boxes"] = boxes
