@@ -175,6 +175,8 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         masks = mask == obj_ids[:, None, None]
 
         label_array = _enumerate_image_for_classes(label_img, self.class_colors)
+        np.set_printoptions(threshold=np.inf)
+        print("label array: ", label_array)
         # get bounding box coordinates for each mask
         num_objs = len(obj_ids)
         boxes = []
@@ -205,6 +207,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         # there WAS multi class
         # labels = torch.as_tensor(labels, dtype=torch.int64)
         labels = torch.ones((num_objs,), dtype=torch.int64)
+        print("masks: ", masks)
 
         masks = torch.as_tensor(masks, dtype=torch.uint8)
 
@@ -227,9 +230,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             boxes = torch.as_tensor(boxes, dtype=torch.float32)
 
 
-        print("boxes: ", boxes)
-        print("masks: ", masks)
-        print("labels: ", labels)
 
 
         target = {}
