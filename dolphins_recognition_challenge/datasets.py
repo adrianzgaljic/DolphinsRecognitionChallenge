@@ -212,7 +212,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         # suppose all instances are not crowd
         iscrowd = torch.zeros((num_objs,), dtype=torch.int64)
 
-
+        print("trans: ", self.tensor_transforms)
         if self.tensor_transforms is not None:
             output = {
                 'image': np.array(img),
