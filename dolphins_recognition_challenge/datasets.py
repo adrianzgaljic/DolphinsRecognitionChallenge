@@ -222,7 +222,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
                 #'bboxes': boxes
             }
             self.tensor_transforms(**output)
-            img = img_data['image']
+            img = output['image']
             #masks = img_data['masks']
             #boxes = img_data['bboxes']
 
