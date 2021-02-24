@@ -311,6 +311,7 @@ def _get_instance_segmentation_dataset(
 def stack_imgs(imgs: List[PIL.Image.Image], width: int=None) -> PIL.Image:
     """ Stacks images horizontaly in one large image. Very useful for debugging purposes.
     """
+    print("imgs", imgs)
     height = max([img.size[1] for img in imgs])
     imgs = [np.array(img.resize((img.size[0], height))) for img in imgs]
     imgs = np.hstack(imgs)
@@ -329,7 +330,7 @@ def display_batches(data_loader: torch.utils.data.DataLoader, *, n_batches: int=
     for i, (x, y) in enumerate(data_loader):
         if i >= n_batches:
             return
-        if isinstance(x[0], torch.Tensor):
+        if isinstance(x[0], torch.Tensor) or isinstance(img, np.ndarray):
             x = [to_pil_img(t) for t in x]
         display(stack_imgs(x, width=width))
         if show_y:
