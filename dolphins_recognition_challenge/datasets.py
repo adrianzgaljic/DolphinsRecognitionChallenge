@@ -219,6 +219,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
                 'masks': np.array(masks),
                 'bboxes': boxes
             }
+            print("in")
             self.tensor_transforms(**output)
             img = output['image']
             masks = output['masks']
