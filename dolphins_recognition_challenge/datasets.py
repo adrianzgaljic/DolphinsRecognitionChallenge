@@ -188,6 +188,8 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             ymax = np.max(pos[0])
             width = xmax - xmin
             height = ymax - ymin
+            width = 1 if width < 1 else width
+            height = 1 if height < 1 else height
             boxes.append([xmin, ymin, width, height])
 
             class_mask = label_array * masks[i]
@@ -211,17 +213,19 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
 
         if self.tensor_transforms is not None:
-            transformed = self.tensor_transforms(
-              image=img,
-              masks=masks,
-              bboxes=boxes,
-              bbox_classes=labels,
-            )
-            img = transformed["image"]
-            masks = transformed["masks"]
-            boxes = transformed["bboxes"]
-            labels = transformed["bbox_classes"]
-
+            try:
+                transformed = self.tensor_transforms(
+                  image=img,
+                  masks=masks,
+                  bboxes=boxes,
+                  bbox_classes=labels,
+                )
+                img = transformed["image"]
+                masks = transformed["masks"]
+                boxes = transformed["bboxes"]
+                labels = transformed["bbox_classes"]
+            except:
+                print(f"[{idx}] Invalid transformation of boxes: ", boxes)
         target = {}
         target["boxes"] = boxes
         target["labels"] = labels
