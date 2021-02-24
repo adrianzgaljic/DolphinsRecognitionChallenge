@@ -233,7 +233,8 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         target["image_id"] = image_id
         target["area"] = area
         target["iscrowd"] = iscrowd
-
+        img = Image.fromarray(np.uint8(img)).convert('RGB')
+        img = torchvision.transforms.ToTensor()(img)
 
         return img, target
 
