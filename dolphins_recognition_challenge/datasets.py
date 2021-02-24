@@ -208,7 +208,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
 
         if self.tensor_transforms is not None:
-            transformed = transform(
+            transformed = tensor_transforms(
               image=img,
               masks=masks,
               bboxes=boxes,
@@ -218,7 +218,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             masks = transformed["masks"]
             boxes = transformed["bboxes"]
             labels = transformed["bbox_classes"]
-            
+
         target = {}
         target["boxes"] = boxes
         target["labels"] = labels
