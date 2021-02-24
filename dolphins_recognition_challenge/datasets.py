@@ -156,7 +156,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
         # load and transform images and masks
         img = Image.open(img_path).convert("RGB")
-        img = torchvision.transforms.ToTensor()(img)
         mask_img = Image.open(mask_path)
         label_img = Image.open(label_path)
 
@@ -213,11 +212,10 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         iscrowd = torch.zeros((num_objs,), dtype=torch.int64)
 
 
-
         if self.tensor_transforms is not None:
             print(img.shape)
             output = {
-                'image': img#,
+                'image': np.array(img)#,
                 #'masks': masks,
                 #'bboxes': boxes
             }
