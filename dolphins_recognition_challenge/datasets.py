@@ -330,7 +330,7 @@ def display_batches(data_loader: torch.utils.data.DataLoader, *, n_batches: int=
     for i, (x, y) in enumerate(data_loader):
         if i >= n_batches:
             return
-        if isinstance(x[0], torch.Tensor) or isinstance(img, np.ndarray):
+        if isinstance(x[0], torch.Tensor) or isinstance(x[0], np.ndarray):
             x = [to_pil_img(t) for t in x]
         display(stack_imgs(x, width=width))
         if show_y:
