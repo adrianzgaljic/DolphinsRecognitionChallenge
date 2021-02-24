@@ -215,12 +215,8 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         iscrowd = torch.zeros((num_objs,), dtype=torch.int64)
 
         if self.tensor_transforms is not None and len(self.tensor_transforms.transforms.transforms)>0:
-            output = {
-                'image': np.array(img),
-                'masks': np.array(masks),
-                'bboxes': boxes
-            }
-            transformed = self.tensor_transforms(image=img, bboxes=boxes, mask=mask, class_labels=labels)
+            
+            transformed = self.tensor_transforms(image=np.array(img), bboxes=boxes, mask=np.array(mask), class_labels=labels)
             img = transformed['image']
             masks = transformed['masks']
             masks = torch.as_tensor(masks, dtype=torch.uint8)
