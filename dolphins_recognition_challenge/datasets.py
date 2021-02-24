@@ -192,8 +192,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             ymin = ymin/img.shape[1]
             ymax = ymax/img.shape[1]
 
-            boxes.append([xmin, ymin, xmax, ymax, 1])
-
+            boxes.append([xmin, ymin, xmax, ymax])
 
             class_mask = label_array * masks[i]
             label, count = np.unique(class_mask, return_counts=True)
@@ -202,7 +201,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             labels.append(label)
 
         boxes = torch.as_tensor(boxes, dtype=torch.float32)
-
         # there WAS multi class
         # labels = torch.as_tensor(labels, dtype=torch.int64)
         labels = torch.ones((num_objs,), dtype=torch.int64)
@@ -221,12 +219,12 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
               image=img,
               masks=masks,
               bboxes=boxes,
-              #bbox_classes=labels,
+              bbox_classes=labels,
             )
             img = transformed["image"]
             masks = transformed["masks"]
             boxes = transformed["bboxes"]
-            #labels = transformed["bbox_classes"]
+            labels = transformed["bbox_classes"]
 
         target = {}
         target["boxes"] = boxes
