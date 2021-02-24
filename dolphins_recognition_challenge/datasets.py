@@ -222,7 +222,10 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             self.tensor_transforms(**output)
             img = output['image']
             masks = output['masks']
+            masks = torch.as_tensor(masks, dtype=torch.uint8)
             boxes = output['bboxes']
+            boxes = torch.as_tensor(boxes, dtype=torch.float32)
+
 
 
 
