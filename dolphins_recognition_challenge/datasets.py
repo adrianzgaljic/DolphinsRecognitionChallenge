@@ -205,6 +205,20 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         # suppose all instances are not crowd
         iscrowd = torch.zeros((num_objs,), dtype=torch.int64)
 
+
+
+        if self.tensor_transforms is not None:
+            transformed = transform(
+              image=img,
+              masks=masks,
+              bboxes=boxes,
+              bbox_classes=labels,
+            )
+            img = transformed["image"]
+            masks = transformed["masks"]
+            boxes = transformed["bboxes"]
+            labels = transformed["bbox_classes"]
+            
         target = {}
         target["boxes"] = boxes
         target["labels"] = labels
@@ -213,8 +227,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         target["area"] = area
         target["iscrowd"] = iscrowd
 
-        if self.tensor_transforms is not None:
-            img, target = self.tensor_transforms(img, target)
 
         return img, target
 
