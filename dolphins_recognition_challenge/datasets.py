@@ -188,7 +188,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
             img_width, img_height = img.size
             xmin = xmin/img_width
-            xmax = xmax/iimg_width
+            xmax = xmax/img_width
             ymin = ymin/img_height
             ymax = ymax/img_height
 
