@@ -190,7 +190,12 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             height = ymax - ymin
             width = 1 if width < 1 else width
             height = 1 if height < 1 else height
-            boxes.append([xmin, ymin, width, height])
+            xmin = xmin//width
+            xmax = xmax//width
+            ymin = ymin//height
+            ymax = ymax//height
+
+            boxes.append([xmin, ymin, xmax, ymax])
 
             class_mask = label_array * masks[i]
             label, count = np.unique(class_mask, return_counts=True)
