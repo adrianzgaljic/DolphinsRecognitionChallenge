@@ -198,7 +198,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             ymin = np.min(pos[0])
             ymax = np.max(pos[0])
 
-            img_width, img_height = img.size
             boxes.append([xmin, ymin, xmax, ymax])
 
             class_mask = label_array * masks[i]
