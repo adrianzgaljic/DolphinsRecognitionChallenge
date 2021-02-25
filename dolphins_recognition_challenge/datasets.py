@@ -224,13 +224,9 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             boxes = augmented['bboxes']
 
 
-        print(type(boxes))
-        print(type(masks))
-
         boxes = torch.as_tensor(boxes, dtype=torch.float32)
         masks = torch.as_tensor(masks, dtype=torch.uint8)
-        print(type(boxes))
-        print(type(masks))
+
 
         target = {}
         target["boxes"] = boxes
