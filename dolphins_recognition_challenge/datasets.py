@@ -155,7 +155,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
         self.class_colors = _enumerate_colors_for_fnames(self.label_paths)
 
-    def __getitem__(self, idx):
+    def load_example(self, idx):
 
         # load images ad masks
         img_path = self.img_paths[idx]
