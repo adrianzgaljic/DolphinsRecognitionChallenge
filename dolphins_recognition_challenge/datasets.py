@@ -23,6 +23,13 @@ from PIL import Image
 from zipfile import ZipFile
 import random
 import sys
+from pathlib import Path
+import random
+import albumentations as A
+from albumentations.pytorch.transforms import ToTensorV2
+import cv2
+from skimage.color import label2rgb
+import matplotlib.pyplot as plt
 
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
@@ -156,7 +163,10 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         mask_path = self.mask_paths[idx]
 
         # load and transform images and masks
-        img = Image.open(img_path).convert("RGB")
+        image = cv2.imread(str(img_path), 1)
+        image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        height, width, channels = image.shape
+        MAX_SIZE = 500
         mask_img = Image.open(mask_path)
         label_img = Image.open(label_path)
 
@@ -174,7 +184,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         # split the color-encoded mask into a set
         # of binary masks
         masks = mask == obj_ids[:, None, None]
-
+        masks = 1*masks
         label_array = _enumerate_image_for_classes(label_img, self.class_colors)
         # get bounding box coordinates for each mask
         num_objs = len(obj_ids)
@@ -188,12 +198,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             ymax = np.max(pos[0])
 
             img_width, img_height = img.size
-            '''
-            xmin = xmin/img_width
-            xmax = xmax/img_width
-            ymin = ymin/img_height
-            ymax = ymax/img_height
-            '''
             boxes.append([xmin, ymin, xmax, ymax])
 
             class_mask = label_array * masks[i]
@@ -207,8 +211,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         # labels = torch.as_tensor(labels, dtype=torch.int64)
         labels = torch.ones((num_objs,), dtype=torch.int64)
 
-        masks = torch.as_tensor(masks, dtype=torch.uint8)
-
         image_id = torch.tensor([idx])
         area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])
         # suppose all instances are not crowd
@@ -216,14 +218,11 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
         if self.tensor_transforms is not None and len(self.tensor_transforms.transforms.transforms)>0:
 
-            transformed = self.tensor_transforms(image=np.array(img), bboxes=boxes, masks=np.array(masks), class_labels=labels)
-            img = transformed['image']
-            masks = transformed['masks']
-            masks = torch.as_tensor(masks, dtype=torch.uint8)
-            boxes = transformed['bboxes']
-            boxes = torch.as_tensor(boxes, dtype=torch.float32)
-            labels = transformed['class_labels']
-            labels = torch.as_tensor(labels, dtype=torch.int64)
+            boxes = list(boxes)
+            augmented = self.tensor_transforms(image=img, masks=np.array(masks), bboxes=boxes, category_id=labels)
+            img = augmented['image']
+            masks = augmented['masks']
+            boxes = augmented['bboxes']
 
 
 
