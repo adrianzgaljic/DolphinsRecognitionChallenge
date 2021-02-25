@@ -163,9 +163,9 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         mask_path = self.mask_paths[idx]
 
         # load and transform images and masks
-        image = cv2.imread(str(img_path), 1)
-        image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        height, width, channels = image.shape
+        img = cv2.imread(str(img_path), 1)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        height, width, channels = img.shape
         MAX_SIZE = 500
         mask_img = Image.open(mask_path)
         label_img = Image.open(label_path)
