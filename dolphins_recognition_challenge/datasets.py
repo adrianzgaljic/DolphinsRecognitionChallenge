@@ -40,7 +40,6 @@ from torchvision.transforms import ToPILImage
 from tempfile import TemporaryDirectory
 
 from dolphins_recognition_challenge import utils
-from copy_paste import copy_paste_class
 from torch.utils.data import Dataset
 sys.path.insert(1, 'dolphins_recognition_challenge')
 from copy_paste import CopyPaste
