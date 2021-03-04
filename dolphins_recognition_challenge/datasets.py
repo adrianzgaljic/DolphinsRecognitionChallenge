@@ -169,6 +169,7 @@ def get_data(idx, img_path, label_path, mask_path, class_colors):
     label_array = _enumerate_image_for_classes(label_img, class_colors)
     # get bounding box coordinates for each mask
     num_objs = len(obj_ids)
+    print("num_objects", num_objs)
     boxes = []
     labels = []
     for i in range(num_objs):
@@ -195,6 +196,10 @@ def get_data(idx, img_path, label_path, mask_path, class_colors):
     area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])
     # suppose all instances are not crowd
     iscrowd = torch.zeros((num_objs,), dtype=torch.int64)
+    print("len boxes: ", boxes)
+    print("len masks: ", masks)
+    print("len labels: ", labels)
+
     return img, boxes, masks, labels, image_id, area, iscrowd
 
 
