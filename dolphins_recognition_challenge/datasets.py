@@ -196,7 +196,7 @@ def get_data(idx, img_path, label_path, mask_path, class_colors):
     area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])
     # suppose all instances are not crowd
     iscrowd = torch.zeros((num_objs,), dtype=torch.int64)
-    print("len boxes: ", len(boxes=)
+    print("len boxes: ", len(boxes))
     print("len masks: ", len(masks))
     print("len labels: ", len(labels))
 
