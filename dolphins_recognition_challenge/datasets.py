@@ -138,7 +138,7 @@ def _enumerate_image_for_classes(
 
 # Internal Cell
 
-def get_data(img_path, label_path, mask_path):
+def get_data(img_path, label_path, mask_path, class_colors):
 
     # load and transform images and masks
     img = cv2.imread(str(img_path), 1)
@@ -166,7 +166,7 @@ def get_data(img_path, label_path, mask_path):
     # of binary masks
     masks = mask == obj_ids[:, None, None]
     masks = 1*masks
-    label_array = _enumerate_image_for_classes(label_img, self.class_colors)
+    label_array = _enumerate_image_for_classes(label_img, class_colors)
     # get bounding box coordinates for each mask
     num_objs = len(obj_ids)
     boxes = []
@@ -223,7 +223,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         label_path = self.label_paths[idx]
         mask_path = self.mask_paths[idx]
 
-        img, boxes, masks, labels, image_id, area, iscrowd = get_data(img_path, label_path, mask_path)
+        img, boxes, masks, labels, image_id, area, iscrowd = get_data(img_path, label_path, mask_path, self.class_colors)
 
         if self.tensor_transforms is not None and len(self.tensor_transforms.transforms.transforms)>0:
 
