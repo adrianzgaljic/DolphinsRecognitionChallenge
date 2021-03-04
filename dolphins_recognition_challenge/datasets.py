@@ -10,7 +10,7 @@ from typing import *
 
 # Internal Cell
 
-
+import sys
 import numpy as np
 import shutil
 from datetime import datetime
@@ -42,6 +42,7 @@ from tempfile import TemporaryDirectory
 from dolphins_recognition_challenge import utils
 from copy_paste import copy_paste_class
 from torch.utils.data import Dataset
+sys.path.insert(1, 'dolphins_recognition_challenge')
 from copy_paste import CopyPaste
 
 
@@ -148,7 +149,7 @@ def get_data(idx):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     dim = (500, 750)
     img = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
-    
+
     height, width, channels = img.shape
     MAX_SIZE = 500
 
