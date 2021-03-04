@@ -138,10 +138,7 @@ def _enumerate_image_for_classes(
 
 # Internal Cell
 
-def get_data(idx):
-    img_path = self.img_paths[idx]
-    label_path = self.label_paths[idx]
-    mask_path = self.mask_paths[idx]
+def get_data(img_path, label_path, mask_path):
 
     # load and transform images and masks
     img = cv2.imread(str(img_path), 1)
@@ -222,7 +219,11 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
 
-        img, boxes, masks, labels, image_id, area, iscrowd = get_data(idx)
+        img_path = self.img_paths[idx]
+        label_path = self.label_paths[idx]
+        mask_path = self.mask_paths[idx]
+
+        img, boxes, masks, labels, image_id, area, iscrowd = get_data(img_path, label_path, mask_path)
 
         if self.tensor_transforms is not None and len(self.tensor_transforms.transforms.transforms)>0:
 
