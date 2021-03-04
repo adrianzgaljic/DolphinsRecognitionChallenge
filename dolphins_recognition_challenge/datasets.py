@@ -144,15 +144,15 @@ def get_data(idx, img_path, label_path, mask_path, class_colors):
     img = cv2.imread(str(img_path), 1)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     dim = (500, 750)
-    img = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+    #img = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
 
     height, width, channels = img.shape
     MAX_SIZE = 500
 
     mask_img = Image.open(mask_path)
-    mask_img = mask_img.resize(dim)
+    #mask_img = mask_img.resize(dim)
     label_img = Image.open(label_path)
-    label_img = label_img.resize(dim)
+    #label_img = label_img.resize(dim)
 
     mask = _enumerate_image_for_instances(mask_img)
 
@@ -196,9 +196,9 @@ def get_data(idx, img_path, label_path, mask_path, class_colors):
     area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])
     # suppose all instances are not crowd
     iscrowd = torch.zeros((num_objs,), dtype=torch.int64)
-    print("len boxes: ", boxes)
-    print("len masks: ", masks)
-    print("len labels: ", labels)
+    print("len boxes: ", len(boxes=)
+    print("len masks: ", len(masks))
+    print("len labels: ", len(labels))
 
     return img, boxes, masks, labels, image_id, area, iscrowd
 
