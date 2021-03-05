@@ -231,12 +231,12 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         label_path_b = self.label_paths[idx_b]
         mask_path_b = self.mask_paths[idx_b]
         img_b, boxes_b, masks_b, labels_b, image_id_b, area_b, iscrowd_b = get_data(idx_b, img_path_b, label_path_b, mask_path_b, self.class_colors)
-        print("len boxes: ", len(boxes))
-        print("len masks: ", len(masks))
-        print("len labels: ", len(labels))
-        print("len boxes b: ", len(boxes_b))
-        print("len masks b: ", len(masks_b))
-        print("len labels b: ", len(labels_b))
+        print("len boxes: ", idx_b, " ", len(boxes))
+        print("len masks: ", idx_b, " ",len(masks))
+        print("len labels: ", idx_b, " ",len(labels))
+        print("len boxes b: ", idx_b, " ",len(boxes_b))
+        print("len masks b: ", idx_b, " ",len(masks_b))
+        print("len labels b: ", idx_b, " ",len(labels_b))
 
         if self.tensor_transforms is not None and len(self.tensor_transforms.transforms.transforms)>0:
 
