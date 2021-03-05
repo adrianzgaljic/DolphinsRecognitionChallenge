@@ -235,6 +235,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
         while True:
             idx_b = random.randint(0,159)
+            print("idx_b ", idx_b)
             img_path_b = self.img_paths[idx_b]
             label_path_b = self.label_paths[idx_b]
             mask_path_b = self.mask_paths[idx_b]
