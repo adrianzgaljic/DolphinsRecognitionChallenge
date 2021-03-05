@@ -153,8 +153,9 @@ def get_data(idx, img_path, label_path, mask_path, class_colors):
     #mask_img = mask_img.resize(dim)
     label_img = Image.open(label_path)
     #label_img = label_img.resize(dim)
-    print("mask_path ", mask_path)
-    print("label_img ", label_img)
+    print("img ",idx,  img.shape)
+    print("mask_img ",idx,  mask_img.size)
+    print("label_img ",idx,  label_img.size)
 
     mask = _enumerate_image_for_instances(mask_img)
 
