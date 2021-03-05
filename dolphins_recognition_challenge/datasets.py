@@ -186,6 +186,8 @@ def get_data(idx, img_path, label_path, mask_path, class_colors):
             assert label.shape[0] <= 2
             label = max(label)
             labels.append(label)
+        else:
+            print("removing: ", idx)
 
     boxes = torch.as_tensor(boxes, dtype=torch.float32)
     # there WAS multi class
