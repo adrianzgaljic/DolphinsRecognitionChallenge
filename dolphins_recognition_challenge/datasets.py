@@ -230,7 +230,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
         while True:
             idx_b = random.randint(0,158)
-            print("idx_b ", idx_b, "-", len(self.img_paths))
             img_path_b = self.img_paths[idx_b]
             label_path_b = self.label_paths[idx_b]
             mask_path_b = self.mask_paths[idx_b]
@@ -257,12 +256,13 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
                 img = augmented['image']
                 masks = augmented['masks']
                 boxes = augmented['bboxes']
+                boxes = torch.as_tensor(boxes, dtype=torch.float32)
             except:
                 print("error!!!")
 
         #print("boxes ", boxes)
         boxes = [box[:4] for box in boxes]
-        #boxes = torch.as_tensor(boxes, dtype=torch.float32)
+
         masks = torch.as_tensor(masks, dtype=torch.uint8)
 
 
