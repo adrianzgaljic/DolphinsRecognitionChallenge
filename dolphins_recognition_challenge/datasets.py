@@ -179,8 +179,7 @@ def get_data(idx, img_path, label_path, mask_path, class_colors):
         ymin = np.min(pos[0])
         ymax = np.max(pos[0])
         if xmax > xmin and ymax > ymin:
-            boxes.append([xmin, ymin, xmax, ymax])
-
+            boxes.append([xmin, ymin, xmax, ymax, 1, i])
             class_mask = label_array * masks[i]
             label, count = np.unique(class_mask, return_counts=True)
             assert label.shape[0] <= 2
