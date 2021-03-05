@@ -153,6 +153,8 @@ def get_data(idx, img_path, label_path, mask_path, class_colors):
     #mask_img = mask_img.resize(dim)
     label_img = Image.open(label_path)
     #label_img = label_img.resize(dim)
+    print("mask_path ", mask_path)
+    print("label_img ", label_img)
 
     mask = _enumerate_image_for_instances(mask_img)
 
@@ -167,6 +169,9 @@ def get_data(idx, img_path, label_path, mask_path, class_colors):
     masks = mask == obj_ids[:, None, None]
     masks = 1*masks
     label_array = _enumerate_image_for_classes(label_img, class_colors)
+    print("label_array len", len(label_array))
+    print("masks len", len(masks))
+
     # get bounding box coordinates for each mask
     num_objs = len(obj_ids)
     #print("num_objects", num_objs)
