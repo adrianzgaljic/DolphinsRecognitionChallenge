@@ -64,8 +64,8 @@ def bboxes_copy_paste(bboxes, paste_bboxes, masks, paste_masks, alpha, key):
         mask_indices = [box[-1] for box in bboxes]
         adjusted_bboxes = [adjusted_bboxes[int(idx)] for idx in mask_indices]
         #append bbox tails (classes, etc.)
-        print("adjusted_bboxes ", adjusted_bboxes)
-        print("bboxes ", bboxes)
+        #print("adjusted_bboxes ", adjusted_bboxes)
+        #print("bboxes ", bboxes)
         adjusted_bboxes = [bbox + tail[4:] for bbox, tail in zip(adjusted_bboxes, bboxes)]
 
         #adjust paste_bboxes mask indices to avoid overlap
