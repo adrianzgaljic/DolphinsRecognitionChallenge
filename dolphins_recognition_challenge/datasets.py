@@ -227,7 +227,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         mask_path = self.mask_paths[idx]
         img, boxes, masks, labels, image_id, area, iscrowd = get_data(idx, img_path, label_path, mask_path, self.class_colors)
 
-        while(true):
+        while True:
             idx_b = random.randint(0,159)
             img_path_b = self.img_paths[idx_b]
             label_path_b = self.label_paths[idx_b]
@@ -235,7 +235,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             img_b, boxes_b, masks_b, labels_b, image_id_b, area_b, iscrowd_b = get_data(idx_b, img_path_b, label_path_b, mask_path_b, self.class_colors)
             if img_b.shape == img.shape:
                 break
-                
+
         '''
         print("len boxes: ", idx_b, " ", len(boxes))
         print("len masks: ", idx_b, " ",len(masks))
