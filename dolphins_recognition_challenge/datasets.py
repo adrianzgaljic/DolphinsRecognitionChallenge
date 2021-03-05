@@ -153,9 +153,6 @@ def get_data(idx, img_path, label_path, mask_path, class_colors):
     #mask_img = mask_img.resize(dim)
     label_img = Image.open(label_path)
     #label_img = label_img.resize(dim)
-    print("img ",idx,  img.shape)
-    print("mask_img ",idx,  mask_img.size)
-    print("label_img ",idx,  label_img.size)
 
     mask = _enumerate_image_for_instances(mask_img)
 
@@ -170,8 +167,6 @@ def get_data(idx, img_path, label_path, mask_path, class_colors):
     masks = mask == obj_ids[:, None, None]
     masks = 1*masks
     label_array = _enumerate_image_for_classes(label_img, class_colors)
-    print("label_array len", len(label_array))
-    print("masks len", len(masks))
 
     # get bounding box coordinates for each mask
     num_objs = len(obj_ids)
@@ -235,7 +230,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
         while True:
             idx_b = random.randint(0,159)
-            print("idx_b ", idx_b)
+            print("idx_b ", idx_b, "-", len(self.img_paths))
             img_path_b = self.img_paths[idx_b]
             label_path_b = self.label_paths[idx_b]
             mask_path_b = self.mask_paths[idx_b]
