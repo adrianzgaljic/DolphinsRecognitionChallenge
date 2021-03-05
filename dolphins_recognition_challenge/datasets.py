@@ -247,7 +247,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
             boxes = [box.tolist() for box in boxes]
             boxes_b = [box.tolist() for box in boxes_b]
 
-            augmented = self.tensor_transforms(image=img, masks=masks, bboxes=boxes, paste_image = img_b, paste_masks=masks_b, paste_bboxes=boxes_b, category_id=labels_b)
+            augmented = self.tensor_transforms(image=img, masks=masks, bboxes=boxes, paste_image = img_b, paste_masks=masks_b, paste_bboxes=boxes_b, category_id=labels)
             img = augmented['image']
             masks = augmented['masks']
             boxes = augmented['bboxes']
