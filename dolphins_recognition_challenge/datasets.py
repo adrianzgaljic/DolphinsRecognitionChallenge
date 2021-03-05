@@ -256,7 +256,6 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
                 img = augmented['image']
                 masks = augmented['masks']
                 boxes = augmented['bboxes']
-                boxes = torch.as_tensor(boxes, dtype=torch.float32)
             except:
                 print("error!!!")
 
@@ -267,6 +266,13 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
 
         target = {}
+        print("boxes: ", type(boxes))
+        print("labels: ", type(labels))
+        print("masks: ", type(masks))
+        print("image_id: ", type(image_id))
+        print("iscrowd: ", type(iscrowd))
+
+
         target["boxes"] = boxes
         target["labels"] = labels
         target["masks"] = masks
