@@ -244,6 +244,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         print("len masks b: ", idx_b, " ",len(masks_b))
         print("len labels b: ", idx_b, " ",len(labels_b))
         '''
+
         if self.tensor_transforms is not None and len(self.tensor_transforms.transforms.transforms)>0:
 
 
@@ -259,7 +260,7 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
 
         #print("boxes ", boxes)
         boxes = [box[:4] for box in boxes]
-        boxes = torch.as_tensor(boxes, dtype=torch.float32)
+        #boxes = torch.as_tensor(boxes, dtype=torch.float32)
         masks = torch.as_tensor(masks, dtype=torch.uint8)
 
 
