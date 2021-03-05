@@ -228,13 +228,22 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         img_path = self.img_paths[idx]
         label_path = self.label_paths[idx]
         mask_path = self.mask_paths[idx]
-
         img, boxes, masks, labels, image_id, area, iscrowd = get_data(idx, img_path, label_path, mask_path, self.class_colors)
+
+        idx_b = random.randint(0,159)
+        img_path_b = self.img_paths[idx_b]
+        label_path_b = self.label_paths[idx_b]
+        mask_path_b = self.mask_paths[idx_b]
+        img_b, boxes_b, masks_b, labels_b, image_id_b, area_b, iscrowd_b = get_data(idx_b, img_path_b, label_path_b, mask_path_b, self.class_colors)
+
 
         if self.tensor_transforms is not None and len(self.tensor_transforms.transforms.transforms)>0:
 
-            boxes = list(boxes)
-            augmented = self.tensor_transforms(image=img, masks=np.array(masks), bboxes=boxes, category_id=labels)
+
+            boxes = [box.tolist() for box in boxes]
+            boxes_paste = [box.tolist() for box in boxes_paste]
+
+            augmented = self.tensor_transforms(image=img, masks=masks, bboxes=boxes, paste_image = img_b, paste_masks=masks_b, paste_bboxes=boxes_b, category_id=labels_b)
             img = augmented['image']
             masks = augmented['masks']
             boxes = augmented['bboxes']
