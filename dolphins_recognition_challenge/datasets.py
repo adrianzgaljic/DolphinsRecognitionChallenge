@@ -229,22 +229,13 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
         img, boxes, masks, labels, image_id, area, iscrowd = get_data(idx, img_path, label_path, mask_path, self.class_colors)
 
         while True:
-            idx_b = random.randint(0,158)
+            idx_b = random.randint(0,len(self.img_paths)-1)
             img_path_b = self.img_paths[idx_b]
             label_path_b = self.label_paths[idx_b]
             mask_path_b = self.mask_paths[idx_b]
             img_b, boxes_b, masks_b, labels_b, image_id_b, area_b, iscrowd_b = get_data(idx_b, img_path_b, label_path_b, mask_path_b, self.class_colors)
             if img_b.shape == img.shape:
                 break
-
-        '''
-        print("len boxes: ", idx_b, " ", len(boxes))
-        print("len masks: ", idx_b, " ",len(masks))
-        print("len labels: ", idx_b, " ",len(labels))
-        print("len boxes b: ", idx_b, " ",len(boxes_b))
-        print("len masks b: ", idx_b, " ",len(masks_b))
-        print("len labels b: ", idx_b, " ",len(labels_b))
-        '''
 
         if self.tensor_transforms is not None and len(self.tensor_transforms.transforms.transforms)>0:
 
@@ -257,21 +248,17 @@ class DolphinsInstanceSegmentationDataset(torch.utils.data.Dataset):
                 masks = augmented['masks']
                 boxes = augmented['bboxes']
             except:
-                print("error!!!")
+              pass
 
-        #print("boxes ", boxes)
+        else:
+          boxes = boxes.tolist()
         boxes = [box[:4] for box in boxes]
+        boxes = torch.as_tensor(boxes, dtype=torch.float32)
 
         masks = torch.as_tensor(masks, dtype=torch.uint8)
 
 
         target = {}
-        print("boxes: ", type(boxes))
-        print("labels: ", type(labels))
-        print("masks: ", type(masks))
-        print("image_id: ", type(image_id))
-        print("iscrowd: ", type(iscrowd))
-
 
         target["boxes"] = boxes
         target["labels"] = labels
